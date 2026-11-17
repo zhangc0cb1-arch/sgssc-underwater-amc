@@ -1,0 +1,259 @@
+{
+  "observations": 2200,
+  "correct": 765,
+  "accuracy": 0.3477272727272727,
+  "macro_f1": 0.30385771152673374,
+  "macro_f1_definition": "unweighted mean over all published classes; undefined per-class F1 is zero",
+  "class_names": [
+    "BPSK",
+    "QPSK",
+    "8PSK",
+    "PAM4",
+    "QAM16",
+    "QAM64",
+    "GFSK",
+    "CPFSK",
+    "AM-DSB",
+    "AM-SSB",
+    "WBFM"
+  ],
+  "confusion_matrix": [
+    [
+      16,
+      62,
+      29,
+      31,
+      12,
+      6,
+      14,
+      2,
+      0,
+      8,
+      20
+    ],
+    [
+      7,
+      73,
+      25,
+      24,
+      18,
+      10,
+      2,
+      0,
+      0,
+      10,
+      31
+    ],
+    [
+      7,
+      81,
+      30,
+      11,
+      16,
+      9,
+      9,
+      0,
+      0,
+      9,
+      28
+    ],
+    [
+      9,
+      60,
+      34,
+      27,
+      19,
+      5,
+      15,
+      0,
+      0,
+      10,
+      21
+    ],
+    [
+      11,
+      62,
+      41,
+      21,
+      10,
+      13,
+      6,
+      1,
+      0,
+      6,
+      29
+    ],
+    [
+      10,
+      72,
+      28,
+      19,
+      24,
+      7,
+      6,
+      0,
+      0,
+      14,
+      20
+    ],
+    [
+      0,
+      9,
+      1,
+      1,
+      1,
+      0,
+      157,
+      0,
+      4,
+      25,
+      2
+    ],
+    [
+      5,
+      37,
+      12,
+      18,
+      12,
+      6,
+      55,
+      0,
+      1,
+      30,
+      24
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      200,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      200,
+      0
+    ],
+    [
+      8,
+      53,
+      17,
+      23,
+      11,
+      13,
+      28,
+      0,
+      1,
+      1,
+      45
+    ]
+  ],
+  "confusion_axes": {
+    "rows": "true class",
+    "columns": "predicted class"
+  },
+  "per_class": [
+    {
+      "class_id": 0,
+      "class_name": "BPSK",
+      "support": 200,
+      "precision": 0.2191780821917808,
+      "recall": 0.08,
+      "f1": 0.11721611721611722
+    },
+    {
+      "class_id": 1,
+      "class_name": "QPSK",
+      "support": 200,
+      "precision": 0.14341846758349705,
+      "recall": 0.365,
+      "f1": 0.2059238363892807
+    },
+    {
+      "class_id": 2,
+      "class_name": "8PSK",
+      "support": 200,
+      "precision": 0.1382488479262673,
+      "recall": 0.15,
+      "f1": 0.14388489208633093
+    },
+    {
+      "class_id": 3,
+      "class_name": "PAM4",
+      "support": 200,
+      "precision": 0.15428571428571428,
+      "recall": 0.135,
+      "f1": 0.144
+    },
+    {
+      "class_id": 4,
+      "class_name": "QAM16",
+      "support": 200,
+      "precision": 0.08130081300813008,
+      "recall": 0.05,
+      "f1": 0.06191950464396285
+    },
+    {
+      "class_id": 5,
+      "class_name": "QAM64",
+      "support": 200,
+      "precision": 0.10144927536231885,
+      "recall": 0.035,
+      "f1": 0.05204460966542751
+    },
+    {
+      "class_id": 6,
+      "class_name": "GFSK",
+      "support": 200,
+      "precision": 0.5376712328767124,
+      "recall": 0.785,
+      "f1": 0.6382113821138211
+    },
+    {
+      "class_id": 7,
+      "class_name": "CPFSK",
+      "support": 200,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0
+    },
+    {
+      "class_id": 8,
+      "class_name": "AM-DSB",
+      "support": 200,
+      "precision": 0.970873786407767,
+      "recall": 1.0,
+      "f1": 0.9852216748768473
+    },
+    {
+      "class_id": 9,
+      "class_name": "AM-SSB",
+      "support": 200,
+      "precision": 0.6389776357827476,
+      "recall": 1.0,
+      "f1": 0.7797270955165692
+    },
+    {
+      "class_id": 10,
+      "class_name": "WBFM",
+      "support": 200,
+      "precision": 0.20454545454545456,
+      "recall": 0.225,
+      "f1": 0.21428571428571427
+    }
+  ]
+}

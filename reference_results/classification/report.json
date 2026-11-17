@@ -1,0 +1,624 @@
+{
+  "schema": "sgssc-held-out-evaluation-v1",
+  "task": "classification",
+  "device": "cpu",
+  "threads": 4,
+  "batch_size": 64,
+  "checkpoint_sha256": "31849ac8d35a78b3aa468b3de92444e3caf415cb1dcc4915d8be52301b687d70",
+  "checkpoint_schema": "sgssc-inference-v1",
+  "model_config": {
+    "length": 512,
+    "patch": 16,
+    "dim": 128,
+    "depth": 8,
+    "heads": 8,
+    "ff": 1024,
+    "dropout": 0.1,
+    "norm_eps": 1e-05
+  },
+  "class_names": [
+    "BPSK",
+    "QPSK",
+    "8PSK",
+    "PAM4",
+    "QAM16",
+    "QAM64",
+    "GFSK",
+    "CPFSK",
+    "AM-DSB",
+    "AM-SSB",
+    "WBFM"
+  ],
+  "checkpoint_metadata": {
+    "implementation": "Independent SGSSC adaptation for underwater acoustic signals",
+    "input_condition": "Measured-channel replay, no added noise, preserved training-fitted scale",
+    "input_shape": [
+      512,
+      2
+    ],
+    "sample_rate_hz": 8000,
+    "normalization_scale": 3.0439862190625893,
+    "input_scale_note": "Bundled I/Q arrays are already scaled; do not apply the scale again.",
+    "class_names": [
+      "BPSK",
+      "QPSK",
+      "8PSK",
+      "PAM4",
+      "QAM16",
+      "QAM64",
+      "GFSK",
+      "CPFSK",
+      "AM-DSB",
+      "AM-SSB",
+      "WBFM"
+    ],
+    "pretraining_windows": 242000,
+    "pretraining_updates": 20000,
+    "pretraining_selected_step": 20000,
+    "classification_training_labels": 1210,
+    "validation_labels_separately": 2200,
+    "classification_updates": 2000,
+    "classification_selected_step": 1000,
+    "seed": 20261001,
+    "label_run": 0,
+    "encoder_frozen_for_classification": true,
+    "spectral_head_type": "flatten_linear",
+    "pretraining_mask_ratio": 0.7,
+    "sources": {
+      "pretraining": {
+        "path": "outputs/m3/sgssc-expanded-masked-run0/pretrain/best.pt",
+        "sha256": "85fa038cae33df7e9fc354fd0e2d7e8501867bcc2bec537bb5405c160b073216"
+      },
+      "classification": {
+        "path": "outputs/m3/sgssc-expanded-downstream-run0/downstream-0.005/best.pt",
+        "sha256": "fec272213352f56c7beaa5c38b053eca2d837bad287b64c2d41fb0007246cec1"
+      }
+    }
+  },
+  "runtime": {
+    "torch": "2.14.0+cpu",
+    "numpy": "2.5.3"
+  },
+  "training_updates": 0,
+  "selection_policy": "fixed pretrained weights; no test-driven selection",
+  "results": {
+    "test_seen": {
+      "data_file": "test_seen.npz",
+      "data_sha256": "9889f112b5d66c0655916e7f9b9281bb7e8f2fe168481e388aa09c2e959ff5de",
+      "metrics": {
+        "observations": 2200,
+        "correct": 788,
+        "accuracy": 0.35818181818181816,
+        "macro_f1": 0.32951104074967036,
+        "macro_f1_definition": "unweighted mean over all published classes; undefined per-class F1 is zero",
+        "class_names": [
+          "BPSK",
+          "QPSK",
+          "8PSK",
+          "PAM4",
+          "QAM16",
+          "QAM64",
+          "GFSK",
+          "CPFSK",
+          "AM-DSB",
+          "AM-SSB",
+          "WBFM"
+        ],
+        "confusion_matrix": [
+          [
+            25,
+            13,
+            58,
+            14,
+            43,
+            12,
+            10,
+            0,
+            0,
+            0,
+            25
+          ],
+          [
+            25,
+            19,
+            44,
+            28,
+            41,
+            14,
+            10,
+            0,
+            0,
+            1,
+            18
+          ],
+          [
+            22,
+            17,
+            42,
+            27,
+            45,
+            13,
+            11,
+            0,
+            0,
+            0,
+            23
+          ],
+          [
+            21,
+            15,
+            61,
+            16,
+            30,
+            17,
+            17,
+            0,
+            0,
+            0,
+            23
+          ],
+          [
+            29,
+            14,
+            52,
+            27,
+            40,
+            6,
+            13,
+            0,
+            0,
+            0,
+            19
+          ],
+          [
+            23,
+            14,
+            55,
+            26,
+            32,
+            18,
+            15,
+            0,
+            0,
+            0,
+            17
+          ],
+          [
+            0,
+            4,
+            2,
+            0,
+            1,
+            2,
+            187,
+            0,
+            0,
+            1,
+            3
+          ],
+          [
+            13,
+            15,
+            27,
+            16,
+            18,
+            7,
+            83,
+            0,
+            0,
+            0,
+            21
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            7,
+            0,
+            193,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            200,
+            0
+          ],
+          [
+            15,
+            21,
+            28,
+            15,
+            32,
+            4,
+            37,
+            0,
+            0,
+            0,
+            48
+          ]
+        ],
+        "confusion_axes": {
+          "rows": "true class",
+          "columns": "predicted class"
+        },
+        "per_class": [
+          {
+            "class_id": 0,
+            "class_name": "BPSK",
+            "support": 200,
+            "precision": 0.14450867052023122,
+            "recall": 0.125,
+            "f1": 0.13404825737265416
+          },
+          {
+            "class_id": 1,
+            "class_name": "QPSK",
+            "support": 200,
+            "precision": 0.14393939393939395,
+            "recall": 0.095,
+            "f1": 0.1144578313253012
+          },
+          {
+            "class_id": 2,
+            "class_name": "8PSK",
+            "support": 200,
+            "precision": 0.11382113821138211,
+            "recall": 0.21,
+            "f1": 0.14762741652021089
+          },
+          {
+            "class_id": 3,
+            "class_name": "PAM4",
+            "support": 200,
+            "precision": 0.09467455621301775,
+            "recall": 0.08,
+            "f1": 0.08672086720867209
+          },
+          {
+            "class_id": 4,
+            "class_name": "QAM16",
+            "support": 200,
+            "precision": 0.14184397163120568,
+            "recall": 0.2,
+            "f1": 0.16597510373443983
+          },
+          {
+            "class_id": 5,
+            "class_name": "QAM64",
+            "support": 200,
+            "precision": 0.1935483870967742,
+            "recall": 0.09,
+            "f1": 0.12286689419795221
+          },
+          {
+            "class_id": 6,
+            "class_name": "GFSK",
+            "support": 200,
+            "precision": 0.4794871794871795,
+            "recall": 0.935,
+            "f1": 0.6338983050847458
+          },
+          {
+            "class_id": 7,
+            "class_name": "CPFSK",
+            "support": 200,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "class_id": 8,
+            "class_name": "AM-DSB",
+            "support": 200,
+            "precision": 1.0,
+            "recall": 0.965,
+            "f1": 0.9821882951653944
+          },
+          {
+            "class_id": 9,
+            "class_name": "AM-SSB",
+            "support": 200,
+            "precision": 0.9900990099009901,
+            "recall": 1.0,
+            "f1": 0.9950248756218906
+          },
+          {
+            "class_id": 10,
+            "class_name": "WBFM",
+            "support": 200,
+            "precision": 0.2436548223350254,
+            "recall": 0.24,
+            "f1": 0.24181360201511334
+          }
+        ]
+      },
+      "artifacts": {
+        "metrics": "test_seen/metrics.json",
+        "predictions": "test_seen/predictions.npz",
+        "plot": "test_seen/confusion_matrix.png"
+      }
+    },
+    "test_unseen": {
+      "data_file": "test_unseen.npz",
+      "data_sha256": "65efe1050805d8b33b6d0e1cbc8eb30156b89464b0771297d56be21820d31887",
+      "metrics": {
+        "observations": 2200,
+        "correct": 765,
+        "accuracy": 0.3477272727272727,
+        "macro_f1": 0.30385771152673374,
+        "macro_f1_definition": "unweighted mean over all published classes; undefined per-class F1 is zero",
+        "class_names": [
+          "BPSK",
+          "QPSK",
+          "8PSK",
+          "PAM4",
+          "QAM16",
+          "QAM64",
+          "GFSK",
+          "CPFSK",
+          "AM-DSB",
+          "AM-SSB",
+          "WBFM"
+        ],
+        "confusion_matrix": [
+          [
+            16,
+            62,
+            29,
+            31,
+            12,
+            6,
+            14,
+            2,
+            0,
+            8,
+            20
+          ],
+          [
+            7,
+            73,
+            25,
+            24,
+            18,
+            10,
+            2,
+            0,
+            0,
+            10,
+            31
+          ],
+          [
+            7,
+            81,
+            30,
+            11,
+            16,
+            9,
+            9,
+            0,
+            0,
+            9,
+            28
+          ],
+          [
+            9,
+            60,
+            34,
+            27,
+            19,
+            5,
+            15,
+            0,
+            0,
+            10,
+            21
+          ],
+          [
+            11,
+            62,
+            41,
+            21,
+            10,
+            13,
+            6,
+            1,
+            0,
+            6,
+            29
+          ],
+          [
+            10,
+            72,
+            28,
+            19,
+            24,
+            7,
+            6,
+            0,
+            0,
+            14,
+            20
+          ],
+          [
+            0,
+            9,
+            1,
+            1,
+            1,
+            0,
+            157,
+            0,
+            4,
+            25,
+            2
+          ],
+          [
+            5,
+            37,
+            12,
+            18,
+            12,
+            6,
+            55,
+            0,
+            1,
+            30,
+            24
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            200,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            200,
+            0
+          ],
+          [
+            8,
+            53,
+            17,
+            23,
+            11,
+            13,
+            28,
+            0,
+            1,
+            1,
+            45
+          ]
+        ],
+        "confusion_axes": {
+          "rows": "true class",
+          "columns": "predicted class"
+        },
+        "per_class": [
+          {
+            "class_id": 0,
+            "class_name": "BPSK",
+            "support": 200,
+            "precision": 0.2191780821917808,
+            "recall": 0.08,
+            "f1": 0.11721611721611722
+          },
+          {
+            "class_id": 1,
+            "class_name": "QPSK",
+            "support": 200,
+            "precision": 0.14341846758349705,
+            "recall": 0.365,
+            "f1": 0.2059238363892807
+          },
+          {
+            "class_id": 2,
+            "class_name": "8PSK",
+            "support": 200,
+            "precision": 0.1382488479262673,
+            "recall": 0.15,
+            "f1": 0.14388489208633093
+          },
+          {
+            "class_id": 3,
+            "class_name": "PAM4",
+            "support": 200,
+            "precision": 0.15428571428571428,
+            "recall": 0.135,
+            "f1": 0.144
+          },
+          {
+            "class_id": 4,
+            "class_name": "QAM16",
+            "support": 200,
+            "precision": 0.08130081300813008,
+            "recall": 0.05,
+            "f1": 0.06191950464396285
+          },
+          {
+            "class_id": 5,
+            "class_name": "QAM64",
+            "support": 200,
+            "precision": 0.10144927536231885,
+            "recall": 0.035,
+            "f1": 0.05204460966542751
+          },
+          {
+            "class_id": 6,
+            "class_name": "GFSK",
+            "support": 200,
+            "precision": 0.5376712328767124,
+            "recall": 0.785,
+            "f1": 0.6382113821138211
+          },
+          {
+            "class_id": 7,
+            "class_name": "CPFSK",
+            "support": 200,
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0
+          },
+          {
+            "class_id": 8,
+            "class_name": "AM-DSB",
+            "support": 200,
+            "precision": 0.970873786407767,
+            "recall": 1.0,
+            "f1": 0.9852216748768473
+          },
+          {
+            "class_id": 9,
+            "class_name": "AM-SSB",
+            "support": 200,
+            "precision": 0.6389776357827476,
+            "recall": 1.0,
+            "f1": 0.7797270955165692
+          },
+          {
+            "class_id": 10,
+            "class_name": "WBFM",
+            "support": 200,
+            "precision": 0.20454545454545456,
+            "recall": 0.225,
+            "f1": 0.21428571428571427
+          }
+        ]
+      },
+      "artifacts": {
+        "metrics": "test_unseen/metrics.json",
+        "predictions": "test_unseen/predictions.npz",
+        "plot": "test_unseen/confusion_matrix.png"
+      }
+    }
+  },
+  "elapsed_seconds": 6.180226699972991,
+  "timing_scope": "checkpoint/data reading, inference, metrics and optional plotting; not a latency benchmark"
+}

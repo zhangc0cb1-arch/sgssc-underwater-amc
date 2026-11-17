@@ -1,0 +1,204 @@
+{
+  "schema": "sgssc-held-out-evaluation-v1",
+  "task": "spectrum",
+  "device": "cpu",
+  "threads": 4,
+  "batch_size": 64,
+  "checkpoint_sha256": "31849ac8d35a78b3aa468b3de92444e3caf415cb1dcc4915d8be52301b687d70",
+  "checkpoint_schema": "sgssc-inference-v1",
+  "model_config": {
+    "length": 512,
+    "patch": 16,
+    "dim": 128,
+    "depth": 8,
+    "heads": 8,
+    "ff": 1024,
+    "dropout": 0.1,
+    "norm_eps": 1e-05
+  },
+  "class_names": [
+    "BPSK",
+    "QPSK",
+    "8PSK",
+    "PAM4",
+    "QAM16",
+    "QAM64",
+    "GFSK",
+    "CPFSK",
+    "AM-DSB",
+    "AM-SSB",
+    "WBFM"
+  ],
+  "checkpoint_metadata": {
+    "implementation": "Independent SGSSC adaptation for underwater acoustic signals",
+    "input_condition": "Measured-channel replay, no added noise, preserved training-fitted scale",
+    "input_shape": [
+      512,
+      2
+    ],
+    "sample_rate_hz": 8000,
+    "normalization_scale": 3.0439862190625893,
+    "input_scale_note": "Bundled I/Q arrays are already scaled; do not apply the scale again.",
+    "class_names": [
+      "BPSK",
+      "QPSK",
+      "8PSK",
+      "PAM4",
+      "QAM16",
+      "QAM64",
+      "GFSK",
+      "CPFSK",
+      "AM-DSB",
+      "AM-SSB",
+      "WBFM"
+    ],
+    "pretraining_windows": 242000,
+    "pretraining_updates": 20000,
+    "pretraining_selected_step": 20000,
+    "classification_training_labels": 1210,
+    "validation_labels_separately": 2200,
+    "classification_updates": 2000,
+    "classification_selected_step": 1000,
+    "seed": 20261001,
+    "label_run": 0,
+    "encoder_frozen_for_classification": true,
+    "spectral_head_type": "flatten_linear",
+    "pretraining_mask_ratio": 0.7,
+    "sources": {
+      "pretraining": {
+        "path": "outputs/m3/sgssc-expanded-masked-run0/pretrain/best.pt",
+        "sha256": "85fa038cae33df7e9fc354fd0e2d7e8501867bcc2bec537bb5405c160b073216"
+      },
+      "classification": {
+        "path": "outputs/m3/sgssc-expanded-downstream-run0/downstream-0.005/best.pt",
+        "sha256": "fec272213352f56c7beaa5c38b053eca2d837bad287b64c2d41fb0007246cec1"
+      }
+    }
+  },
+  "runtime": {
+    "torch": "2.14.0+cpu",
+    "numpy": "2.5.3"
+  },
+  "training_updates": 0,
+  "selection_policy": "fixed pretrained weights; no test-driven selection",
+  "results": {
+    "test_seen": {
+      "data_file": "test_seen.npz",
+      "data_sha256": "317c4ad1f2b7a34dd57aab52d87e1fdd417e662981337825869d6e184b475bae",
+      "metrics": {
+        "observations": 2200,
+        "length": 512,
+        "results": {
+          "model": {
+            "mse": 0.0007488168782829025,
+            "nmse": 0.022943755342345606,
+            "target_mean_square": 0.032637066910352994,
+            "non_dc": {
+              "mse": 0.000730612490665056,
+              "nmse": 0.023354319493591,
+              "target_mean_square": 0.03128382699678122
+            }
+          },
+          "zero": {
+            "mse": 0.032637066910352994,
+            "nmse": 1.0,
+            "target_mean_square": 0.032637066910352994,
+            "non_dc": {
+              "mse": 0.03128382699678122,
+              "nmse": 1.0,
+              "target_mean_square": 0.03128382699678122
+            }
+          },
+          "masked_input_fft": {
+            "mse": 0.02284008547384243,
+            "nmse": 0.6998204077768151,
+            "target_mean_square": 0.032637066910352994,
+            "non_dc": {
+              "mse": 0.022178454615605706,
+              "nmse": 0.7089431423427714,
+              "target_mean_square": 0.03128382699678122
+            }
+          }
+        },
+        "definitions": {
+          "mse": "mean squared error over all samples, frequency bins and real/imaginary coordinates",
+          "nmse": "global squared-error sum divided by global target-energy sum; not mean per-window NMSE",
+          "non_dc": "same metrics with the fftshift DC bin at index L//2 removed",
+          "masked_input_fft": "orthonormal shifted FFT of the masked input without learned recovery",
+          "undefined_nmse": "null when target energy is zero"
+        },
+        "mask": {
+          "requested_ratio": 0.7,
+          "points_per_window": 358,
+          "actual_ratio": 0.69921875,
+          "policy": "fixed saved point masks; shared I/Q mask; True means masked"
+        }
+      },
+      "artifacts": {
+        "metrics": "test_seen/metrics.json",
+        "predictions": "test_seen/predictions.npz",
+        "plot": "test_seen/spectrum_example.png"
+      }
+    },
+    "test_unseen": {
+      "data_file": "test_unseen.npz",
+      "data_sha256": "c6358f8db5046f96cd8eeaed79422526e8fa46e6ee5c33c905d4f82b7220a1b7",
+      "metrics": {
+        "observations": 2200,
+        "length": 512,
+        "results": {
+          "model": {
+            "mse": 0.0009648098573664398,
+            "nmse": 0.026575124213384423,
+            "target_mean_square": 0.036304998976468314,
+            "non_dc": {
+              "mse": 0.0009452495172647011,
+              "nmse": 0.027991600868115495,
+              "target_mean_square": 0.03376904099620148
+            }
+          },
+          "zero": {
+            "mse": 0.036304998976468314,
+            "nmse": 1.0,
+            "target_mean_square": 0.036304998976468314,
+            "non_dc": {
+              "mse": 0.03376904099620148,
+              "nmse": 1.0,
+              "target_mean_square": 0.03376904099620148
+            }
+          },
+          "masked_input_fft": {
+            "mse": 0.02538755708600123,
+            "nmse": 0.6992854373155772,
+            "target_mean_square": 0.036304998976468314,
+            "non_dc": {
+              "mse": 0.02414955492393515,
+              "nmse": 0.7151389027201459,
+              "target_mean_square": 0.03376904099620148
+            }
+          }
+        },
+        "definitions": {
+          "mse": "mean squared error over all samples, frequency bins and real/imaginary coordinates",
+          "nmse": "global squared-error sum divided by global target-energy sum; not mean per-window NMSE",
+          "non_dc": "same metrics with the fftshift DC bin at index L//2 removed",
+          "masked_input_fft": "orthonormal shifted FFT of the masked input without learned recovery",
+          "undefined_nmse": "null when target energy is zero"
+        },
+        "mask": {
+          "requested_ratio": 0.7,
+          "points_per_window": 358,
+          "actual_ratio": 0.69921875,
+          "policy": "fixed saved point masks; shared I/Q mask; True means masked"
+        }
+      },
+      "artifacts": {
+        "metrics": "test_unseen/metrics.json",
+        "predictions": "test_unseen/predictions.npz",
+        "plot": "test_unseen/spectrum_example.png"
+      }
+    }
+  },
+  "elapsed_seconds": 5.087328299996443,
+  "timing_scope": "checkpoint/data reading, inference, metrics and optional plotting; not a latency benchmark"
+}

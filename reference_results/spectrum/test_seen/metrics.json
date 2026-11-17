@@ -1,0 +1,49 @@
+{
+  "observations": 2200,
+  "length": 512,
+  "results": {
+    "model": {
+      "mse": 0.0007488168782829025,
+      "nmse": 0.022943755342345606,
+      "target_mean_square": 0.032637066910352994,
+      "non_dc": {
+        "mse": 0.000730612490665056,
+        "nmse": 0.023354319493591,
+        "target_mean_square": 0.03128382699678122
+      }
+    },
+    "zero": {
+      "mse": 0.032637066910352994,
+      "nmse": 1.0,
+      "target_mean_square": 0.032637066910352994,
+      "non_dc": {
+        "mse": 0.03128382699678122,
+        "nmse": 1.0,
+        "target_mean_square": 0.03128382699678122
+      }
+    },
+    "masked_input_fft": {
+      "mse": 0.02284008547384243,
+      "nmse": 0.6998204077768151,
+      "target_mean_square": 0.032637066910352994,
+      "non_dc": {
+        "mse": 0.022178454615605706,
+        "nmse": 0.7089431423427714,
+        "target_mean_square": 0.03128382699678122
+      }
+    }
+  },
+  "definitions": {
+    "mse": "mean squared error over all samples, frequency bins and real/imaginary coordinates",
+    "nmse": "global squared-error sum divided by global target-energy sum; not mean per-window NMSE",
+    "non_dc": "same metrics with the fftshift DC bin at index L//2 removed",
+    "masked_input_fft": "orthonormal shifted FFT of the masked input without learned recovery",
+    "undefined_nmse": "null when target energy is zero"
+  },
+  "mask": {
+    "requested_ratio": 0.7,
+    "points_per_window": 358,
+    "actual_ratio": 0.69921875,
+    "policy": "fixed saved point masks; shared I/Q mask; True means masked"
+  }
+}

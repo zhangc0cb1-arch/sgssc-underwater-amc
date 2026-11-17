@@ -1,0 +1,503 @@
+{
+  "schema": "sgssc-underwater-amc-test-release-v1",
+  "release_date": "2026-11-17",
+  "scope": "held-out test data only; no training or validation waveform exports",
+  "data_description": "Synthetic modulation waveforms replayed through measured Pink channel impulse responses; semi-synthetic received I/Q, not real recordings of the eleven modulations.",
+  "input": {
+    "sample_rate_hz": 8000,
+    "window_length": 512,
+    "iq_order": [
+      "I",
+      "Q"
+    ],
+    "dtype": "float32",
+    "source_field": "r",
+    "noise_mode": "none_added",
+    "none_added_meaning": "No additional generated receiver noise; measured-channel propagation and channel-estimation effects remain."
+  },
+  "class_names": [
+    "BPSK",
+    "QPSK",
+    "8PSK",
+    "PAM4",
+    "QAM16",
+    "QAM64",
+    "GFSK",
+    "CPFSK",
+    "AM-DSB",
+    "AM-SSB",
+    "WBFM"
+  ],
+  "normalization": {
+    "scale": 3.0439862190625893,
+    "source": "data/generated/formal-v1/normalization.json",
+    "fit_split": "train",
+    "fit_complex_samples": 929280000,
+    "export_rescaling": "none; bitwise copy of stored float32 r"
+  },
+  "spectrum_test": {
+    "status": "new fixed test task derived from previously held-out classification waveforms for this release",
+    "historical_test_metrics_claimed": false,
+    "historical_monitoring": "The pretraining report's 512 observations are validation monitoring, not this test set.",
+    "seed": 20261117,
+    "mask_count": 358,
+    "mask_ratio_requested": 0.7,
+    "mask_ratio_actual": 0.69921875,
+    "mask_semantics": "True=masked; both I and Q zeroed at identical positions",
+    "mask_algorithm": "For each base ID: stable_seed('sgssc-val-mask',20261117,base_id,0,0), CPU torch.Generator.manual_seed, torch.randperm(512)[:358]. Independent of batch order and model outputs.",
+    "seed_encoding": "JSON ['uwa-amc/stable-seed/v1',parts], ensure_ascii=False, sort_keys=True, separators=(',',':'), allow_nan=False; first 8 SHA256 bytes big-endian, bitwise AND with 2**63-1.",
+    "coordinates": "0,0 are reference-only condition/view indices, not physical SNR",
+    "target": "All 512 complex bins of torch.fft.fftshift(torch.fft.fft(I+1j*Q,dim=1,norm='ortho'),dim=1), stacked real/imaginary float32; computed from complete unmasked r.",
+    "labels_in_spectrum_archives": false
+  },
+  "split_protocol": {
+    "train": {
+      "records": [
+        "pink_2",
+        "pink_3"
+      ],
+      "receiver_id": 0,
+      "channel_block": [
+        0,
+        24
+      ],
+      "channel_starts": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21
+      ],
+      "sources_per_class": 110
+    },
+    "val": {
+      "records": [
+        "pink_2",
+        "pink_3"
+      ],
+      "receiver_id": 0,
+      "channel_block": [
+        28,
+        40
+      ],
+      "channel_starts": [
+        29,
+        33,
+        37
+      ],
+      "sources_per_class": 10
+    },
+    "test_seen": {
+      "records": [
+        "pink_2",
+        "pink_3"
+      ],
+      "receiver_id": 0,
+      "channel_block": [
+        44,
+        56
+      ],
+      "channel_starts": [
+        45,
+        49,
+        53
+      ],
+      "sources_per_class": 10
+    },
+    "test_unseen": {
+      "records": [
+        "pink_1"
+      ],
+      "receiver_id": 0,
+      "channel_block": [
+        0,
+        57.25
+      ],
+      "channel_starts": [
+        1,
+        5,
+        9,
+        13,
+        17,
+        21,
+        25,
+        29,
+        33,
+        37,
+        41,
+        45,
+        49,
+        53
+      ],
+      "sources_per_class": 20
+    }
+  },
+  "independence_assumption": "User instruction 2026-09-30: each Pink file is treated as an independent channel group; not a verified acquisition fact.",
+  "temporal_boundary": "CIR snapshots and phase are read only from their half-open split block; cubic spline has no outside-block support; adjacent split blocks have 4 s gaps",
+  "isolation_audit": {
+    "train_validation_manifest_counts": {
+      "train": 242000,
+      "val": 2200
+    },
+    "test_base_id_overlap_with_train_val": 0,
+    "test_source_id_overlap_with_train_val": 0,
+    "seen_unseen_base_id_overlap": 0,
+    "seen_unseen_source_id_overlap": 0,
+    "training_validation_waveforms_read": 0,
+    "model_inference_calls": 0
+  },
+  "versions": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cpu",
+    "h5py": "3.16.0",
+    "device": "cpu"
+  },
+  "splits": {
+    "test_seen": {
+      "count": 2200,
+      "class_counts": {
+        "BPSK": 200,
+        "QPSK": 200,
+        "8PSK": 200,
+        "PAM4": 200,
+        "QAM16": 200,
+        "QAM64": 200,
+        "GFSK": 200,
+        "CPFSK": 200,
+        "AM-DSB": 200,
+        "AM-SSB": 200,
+        "WBFM": 200
+      },
+      "order_source": "outputs/m3/sgssc-clean-reference-test/test_seen-predictions.npz",
+      "order_policy": "Complete historical held-out ID order; no subset selection and no model-score access",
+      "source_shards": [
+        {
+          "path": "data/generated/formal-v1/shards/test_seen-0000.h5",
+          "sha256": "01c0336b53f6ed370dd525ada93108eae46c28617b847da1d0dfbc48f8af4e67",
+          "bytes": 133206616,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_seen-0001.h5",
+          "sha256": "4e2a57edd016a6a2fc52d7f81612f1f73b1d50ebd2c0122cc6c88d1ed2f0a883",
+          "bytes": 133206616,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_seen-0002.h5",
+          "sha256": "e4c0e08b33fd2ec66dbd8a1dfefb80a71406c2750d40fdb55670b228b44b67d5",
+          "bytes": 133206616,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_seen-0003.h5",
+          "sha256": "7ea0b1cce335a486ed2302e5094c56df493f1d31a97cb2decc0f7c2c97ef0b3f",
+          "bytes": 133206616,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_seen-0004.h5",
+          "sha256": "b28403a314211b752ec723af499ad2621f6c613d3fb68f8e99d09cb1b2cf56d9",
+          "bytes": 133206616,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_seen-0005.h5",
+          "sha256": "9da27b8229fcbff365b46e1429ea6ea091bc6a6c0974ae387a03d1d7eb7185e7",
+          "bytes": 66613880,
+          "count": 200,
+          "field": "r"
+        }
+      ],
+      "classification": {
+        "path": "data/classification/test_seen.npz",
+        "bytes": 8345325,
+        "sha256": "9889f112b5d66c0655916e7f9b9281bb7e8f2fe168481e388aa09c2e959ff5de",
+        "arrays": {
+          "iq": {
+            "shape": [
+              2200,
+              512,
+              2
+            ],
+            "dtype": "float32"
+          },
+          "labels": {
+            "shape": [
+              2200
+            ],
+            "dtype": "int64"
+          },
+          "base_ids": {
+            "shape": [
+              2200
+            ],
+            "dtype": "<U17"
+          }
+        }
+      },
+      "spectrum": {
+        "path": "data/spectrum/test_seen.npz",
+        "bytes": 11611110,
+        "sha256": "317c4ad1f2b7a34dd57aab52d87e1fdd417e662981337825869d6e184b475bae",
+        "arrays": {
+          "masked_iq": {
+            "shape": [
+              2200,
+              512,
+              2
+            ],
+            "dtype": "float32"
+          },
+          "target_spectrum": {
+            "shape": [
+              2200,
+              512,
+              2
+            ],
+            "dtype": "float32"
+          },
+          "masked_positions": {
+            "shape": [
+              2200,
+              512
+            ],
+            "dtype": "bool"
+          },
+          "base_ids": {
+            "shape": [
+              2200
+            ],
+            "dtype": "<U17"
+          }
+        }
+      },
+      "sample_provenance": {
+        "path": "data/classification/test_seen_metadata.csv",
+        "bytes": 378600,
+        "sha256": "4fdcb3a123095fccdf18bd31d14f30cb1dc693f00fb67932edefba13d2e00ba9"
+      },
+      "verification": {
+        "source_iq_bitwise_equal": true,
+        "historical_labels_equal": true,
+        "npz_roundtrip_arrays_equal": true,
+        "mask_count_every_sample": 358,
+        "mask_batch_order_independent": true,
+        "masked_iq_and_visible_values_exact": true,
+        "spectrum_target_recalculation_bitwise_equal": true
+      }
+    },
+    "test_unseen": {
+      "count": 2200,
+      "class_counts": {
+        "BPSK": 200,
+        "QPSK": 200,
+        "8PSK": 200,
+        "PAM4": 200,
+        "QAM16": 200,
+        "QAM64": 200,
+        "GFSK": 200,
+        "CPFSK": 200,
+        "AM-DSB": 200,
+        "AM-SSB": 200,
+        "WBFM": 200
+      },
+      "order_source": "outputs/m3/sgssc-clean-reference-test/test_unseen-predictions.npz",
+      "order_policy": "Complete historical held-out ID order; no subset selection and no model-score access",
+      "source_shards": [
+        {
+          "path": "data/generated/formal-v1/shards/test_unseen-0000.h5",
+          "sha256": "c044ca9d428e75c293bdd2e2e7ad24320928ef09e76adc40a9de7e605776ba57",
+          "bytes": 133194328,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_unseen-0001.h5",
+          "sha256": "614645294978acbaaba0a232187f01ba77d9e9b26e16bf01db9a4797ec90559a",
+          "bytes": 133194328,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_unseen-0002.h5",
+          "sha256": "87414fb7c71f75060ea4961bc53c8b3cff6d653b1a5300f34a381ec3a758d1b2",
+          "bytes": 133194328,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_unseen-0003.h5",
+          "sha256": "01642104169d03a7a93110647cd80ffb432165e84dc51cecf8658135670ad643",
+          "bytes": 133194328,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_unseen-0004.h5",
+          "sha256": "1f8824d547bd8453c57de49e2a0ad9d0ca62987796c5d84fea75e8c0aa40573a",
+          "bytes": 133194328,
+          "count": 400,
+          "field": "r"
+        },
+        {
+          "path": "data/generated/formal-v1/shards/test_unseen-0005.h5",
+          "sha256": "8b7ec826867fbccb2e8a1a6263f3f846b699223c01e67beb34fc3258b62b809e",
+          "bytes": 66605688,
+          "count": 200,
+          "field": "r"
+        }
+      ],
+      "classification": {
+        "path": "data/classification/test_unseen.npz",
+        "bytes": 8334818,
+        "sha256": "65efe1050805d8b33b6d0e1cbc8eb30156b89464b0771297d56be21820d31887",
+        "arrays": {
+          "iq": {
+            "shape": [
+              2200,
+              512,
+              2
+            ],
+            "dtype": "float32"
+          },
+          "labels": {
+            "shape": [
+              2200
+            ],
+            "dtype": "int64"
+          },
+          "base_ids": {
+            "shape": [
+              2200
+            ],
+            "dtype": "<U19"
+          }
+        }
+      },
+      "spectrum": {
+        "path": "data/spectrum/test_unseen.npz",
+        "bytes": 11608094,
+        "sha256": "c6358f8db5046f96cd8eeaed79422526e8fa46e6ee5c33c905d4f82b7220a1b7",
+        "arrays": {
+          "masked_iq": {
+            "shape": [
+              2200,
+              512,
+              2
+            ],
+            "dtype": "float32"
+          },
+          "target_spectrum": {
+            "shape": [
+              2200,
+              512,
+              2
+            ],
+            "dtype": "float32"
+          },
+          "masked_positions": {
+            "shape": [
+              2200,
+              512
+            ],
+            "dtype": "bool"
+          },
+          "base_ids": {
+            "shape": [
+              2200
+            ],
+            "dtype": "<U19"
+          }
+        }
+      },
+      "sample_provenance": {
+        "path": "data/classification/test_unseen_metadata.csv",
+        "bytes": 356120,
+        "sha256": "ef69261840614d3e84d69268a1f7198e9d19b81364be85e3de002d2c20405a91"
+      },
+      "verification": {
+        "source_iq_bitwise_equal": true,
+        "historical_labels_equal": true,
+        "npz_roundtrip_arrays_equal": true,
+        "mask_count_every_sample": 358,
+        "mask_batch_order_independent": true,
+        "masked_iq_and_visible_values_exact": true,
+        "spectrum_target_recalculation_bitwise_equal": true
+      }
+    }
+  },
+  "upstream_data": {
+    "title": "Underwater Acoustic Channel Repository",
+    "doi": "10.5281/zenodo.21287414",
+    "version": "1.0",
+    "url": "https://zenodo.org/records/21287414",
+    "license_id": "cc-by-4.0",
+    "license_url": "https://creativecommons.org/licenses/by/4.0/",
+    "creators": [
+      {
+        "name": "Li, Zhengnan",
+        "affiliation": "University of Alabama",
+        "orcid": "0000-0002-3409-7942"
+      },
+      {
+        "name": "Chitre, Mandar",
+        "affiliation": "National University of Singapore",
+        "orcid": "0000-0001-6243-7871"
+      },
+      {
+        "name": "Cuji, Diego",
+        "affiliation": "Stony Brook University",
+        "orcid": "0000-0002-0986-3801"
+      },
+      {
+        "name": "Preisig, James",
+        "affiliation": "JPAnalytics LLC",
+        "orcid": "0000-0002-7066-8474"
+      },
+      {
+        "name": "Singer, Andrew",
+        "affiliation": "Stony Brook University",
+        "orcid": "0000-0001-9926-7036"
+      },
+      {
+        "name": "Stojanovic, Milica",
+        "affiliation": "Northeastern University",
+        "orcid": "0000-0002-9127-9638"
+      },
+      {
+        "name": "van Walree, Paul",
+        "affiliation": "Norwegian Defence Research Establishment",
+        "orcid": "0000-0001-5757-8768"
+      }
+    ],
+    "license_evidence": "Saved official Zenodo record snapshot; original measured CIRs are transformed by signal replay, receiver preprocessing, crop extraction and fixed masking/FFT for this release.",
+    "raw_channel_files_bundled": false
+  },
+  "source_files_sha256": {
+    "data/generated/formal-v1/index.json": "9ccae1fd6a9d0ba35f943bf511f6a15bb00d705fc6a23986b1c0a1542d2616b8",
+    "data/manifests/formal-v1/protocol.json": "cb7f5970d2bc13daeec4805821610a04bc02e53c91dbc3652c62a81a79cf6e81",
+    "data/generated/formal-v1/normalization.json": "d777c39eb84e1d3c31d4cea9c4a8586cee5ddf2f8f0567ba080f95ab49582abd",
+    "data/manifests/formal-v1/base_manifest.csv": "e85b6c9ab1664149cbe76d1518094e8c25abafa53c248d26b0c242a2043257c3",
+    "data/manifests/sgssc-expanded-downstream-v1/combined_base_manifest.csv": "b23f2d3bae4c9a8fef1d0e04b40903305d6f783b00006692dd677b91caf96229",
+    "data/manifests/sgssc-expanded-downstream-v1/run_0.json": "995df66687695ad9ff82e1dac67df4c36ae1a3f7ddc5ad5693672f6990da734c",
+    "data/raw/pink/zenodo_record_21287414.json": "2d9ee600780a276efeb53fb4734cc53f4f0d66160bf4ee268bd1c626c5a699a4",
+    "src/uwa_amc/data/noise.py": "9e09026fe02c229eeeb6f7a41255c2a626abf1b274c41c88e2085f6c1b0ba53b",
+    "src/uwa_amc/models/sgssc.py": "0ca3f6615fce850a6b81fb80396d4e7d459682bb946511d614234593a0783065",
+    "src/uwa_amc/training/sgssc.py": "70cb3ca9626cb09cbb81e75e184cb1a228606013da3873390fec9d44be26c1ea",
+    "outputs/m3/sgssc-expanded-masked-run0/pretrain/report.json": "6311b5a6ed43b32e400ba9b2749984d4aa97467513ec97a75af6b384f0fb3dbf",
+    "outputs/m3/sgssc-clean-reference-test/test_seen-predictions.npz": "8c4fa976a243d722f141dcc126bb1842128897841e8b23f4624f5658769c5a6e",
+    "outputs/m3/sgssc-clean-reference-test/test_unseen-predictions.npz": "aa7c85b72acee10029ed517d595a3ddc5132cbe492afa0b75b9744db21dd8e4e"
+  },
+  "exporter": {
+    "path": "scripts/export_test_data.py",
+    "sha256": "bc6bb7e721a6bfaac494de2cb56b3b7be136697b6f21c845657bfaf608764577"
+  }
+}

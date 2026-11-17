@@ -1,0 +1,119 @@
+{
+  "schema": "sgssc-clean-training-code-v1",
+  "date": "2026-11-17",
+  "scope": "Portable no-added-noise training implementation; no formal training was executed for this release update",
+  "origin": "Independent underwater-channel SGSSC adaptation; not official IJCAI authors code",
+  "original_repository_relative_files_sha256": {
+    "src/uwa_amc/training/sgssc_expanded.py": "32f4453c9831f36c30b6771c727b203277c935e5be436a8c69c536b6651cdf39",
+    "src/uwa_amc/training/sgssc_expanded_downstream.py": "8745d69b74acf763e7da245760f36bd9141d395bc85c6e579df85ebd7dc3bb99",
+    "src/uwa_amc/training/sgssc.py": "70cb3ca9626cb09cbb81e75e184cb1a228606013da3873390fec9d44be26c1ea",
+    "src/uwa_amc/training/sgssc_joint.py": "8789589afea82d10792f2b14584121397d96852232b492a6da82925f01a7f155",
+    "src/uwa_amc/models/sgssc.py": "0ca3f6615fce850a6b81fb80396d4e7d459682bb946511d614234593a0783065",
+    "src/uwa_amc/models/sgssc_joint.py": "fc892933efdd349e79e83155ac106488239499d0f9c27d8a5c8f4a7690dfb393",
+    "src/uwa_amc/models/sgssc_flat_head.py": "e417e65ee4e3497867dc4f24f54e690ef983883c94f7cec9c51c010d27381ffa",
+    "src/uwa_amc/data/noise.py": "9e09026fe02c229eeeb6f7a41255c2a626abf1b274c41c88e2085f6c1b0ba53b",
+    "outputs/m3/sgssc-expanded-masked-run0/run.json": "2c4e7c95d1a8cb127f662dfb10a5514e2018fee1624d11efe7ff2b38c6508f67",
+    "outputs/m3/sgssc-expanded-downstream-run0/run.json": "daf2b62cf2bbf839dc77867f20ddfd7aa1d3df67c6bd36c619dd00b3f092acf8"
+  },
+  "published_implementation_files_sha256": {
+    "src/sgssc_amc/training.py": "8739145f918dd58202e43bc59d27eefe30e0c8360720d8e9a8f0c83db1289680",
+    "scripts/train_clean.py": "192dc1aee55f1b303165296d3efcb23519e1fb9d216ce0b6db7d39ec47426c7c",
+    "tests/test_training.py": "fc91a6ef09e4119dd4651b7d3494831e3b6505d2c4c09e418b96921f7101427f"
+  },
+  "historical_model_config": {
+    "length": 512,
+    "patch": 16,
+    "dim": 128,
+    "depth": 8,
+    "heads": 8,
+    "ff": 1024,
+    "dropout": 0.1,
+    "norm_eps": 1e-05
+  },
+  "historical_pretraining": {
+    "seed": 20261001,
+    "steps": 20000,
+    "batch_size": 64,
+    "lr": 0.0001,
+    "mask_ratio": 0.7,
+    "validate_every": 250,
+    "validation_observations": 512,
+    "optimizer": "Adam",
+    "weight_decay": 0,
+    "training_pool_windows": 242000,
+    "validation_pool_windows": 2200,
+    "selection": "minimum fixed-subset validation MSE; earliest tie; evaluate step 0 and each 250 steps",
+    "target": "full complex fftshift(fft(I+jQ,norm=ortho)) real/imaginary coordinates",
+    "sampling": "uniform with replacement",
+    "training_mask": "70% time points; shared I/Q; continuing independent CPU RNG",
+    "validation_mask": "fixed per base ID using original stable_seed convention"
+  },
+  "historical_classifier": {
+    "seed": 20261001,
+    "steps": 2000,
+    "batch_size": 64,
+    "lr": 0.001,
+    "validate_every": 250,
+    "optimizer": "Adam",
+    "weight_decay": 0,
+    "objective": "cross entropy only",
+    "published_fraction": "0.005",
+    "published_training_labels": 1210,
+    "training_pool_denominator": 242000,
+    "validation_labels_separately": 2200,
+    "encoder": "all layers frozen and eval; complete IQ without masking",
+    "readout": "fresh original SGSSC multilayer attention readout",
+    "selection": "maximum full-validation correct count; earliest tie; evaluate step 0 and each 250 steps"
+  },
+  "portable_data_contract": {
+    "manifest": "manifest.json with schema=sgssc-clean-data-v1, split=train|val, noise_mode=none_added, class_names in fixed 11-class order",
+    "iq.npy": "float32 [N,length,2], mmap read only",
+    "base_ids.npy": "Unicode [N], unique; training and validation sets must be disjoint",
+    "labels.npy": "int64 [N] in [0,10], opened only for classifier stage",
+    "classifier_train_subset": "externally preselected and ordered; N must equal round(training_pool_size * label_fraction)"
+  },
+  "adaptations": [
+    "Standalone memory-mapped NPY inputs replace original project HDF5 readers and selection manifests. Users must supply correctly split no-added-noise reference windows and a preselected label subset.",
+    "Default update counts, optimizer, mask semantics, seed streams, checkpoint validation criteria, and earliest-tie rules are retained.",
+    "Frozen classification features are cached as NPY, replacing historical HDF5 caches.",
+    "Historical presentation dashboards and additional training-monitor diagnostics are omitted; they do not determine checkpoint selection.",
+    "Checkpoints use tensors/primitives and weights_only=True. Classifier best.pt and last.pt are accepted by the existing inference loader. No automatic resume is implemented.",
+    "New runs on externally supplied data are not asserted to reproduce published weights or scores exactly."
+  ],
+  "verification": {
+    "synthetic_only": true,
+    "pytest_target": "tests/test_training.py",
+    "tests_passed": 11,
+    "coverage": [
+      "both encoder and spectrum head receive gradients",
+      "fixed validation masks follow sample IDs",
+      "pretraining never opens label arrays",
+      "test split and added-noise manifests rejected",
+      "train/validation overlap rejected before output creation",
+      "two-step stages, parameter updates and frozen encoder",
+      "validation best selection and safe checkpoint reload",
+      "classifier outputs match existing inference loader",
+      "label budget count and output overwrite rejection",
+      "undeclared or noisy pretrained sources rejected; missing-field compatibility limited to the audited legacy SHA256"
+    ],
+    "original_implementation_comparison": {
+      "small_synthetic_model": "length32 patch8 dim16 depth2 heads4 ff32 dropout0.1",
+      "pretraining_initial_state_identical": true,
+      "pretraining_one_adam_step_state_identical": true,
+      "classifier_readout_initial_state_identical": true,
+      "original_seed_streams_matched": 6
+    },
+    "real_train_or_validation_waveforms_read": 0,
+    "formal_training_runs": 0,
+    "published_model_weights_changed": false
+  },
+  "packaged_training_data": false,
+  "packaged_validation_data": false,
+  "noise_generation_options": false,
+  "pretrained_source_policy": {
+    "new_pretraining_checkpoint": "metadata.noise_mode must explicitly equal none_added",
+    "inference_checkpoint": "explicit none_added, or missing noise_mode only for the audited legacy hash",
+    "audited_legacy_inference_sha256": "31849ac8d35a78b3aa468b3de92444e3caf415cb1dcc4915d8be52301b687d70",
+    "unknown_undeclared_source": "reject"
+  }
+}

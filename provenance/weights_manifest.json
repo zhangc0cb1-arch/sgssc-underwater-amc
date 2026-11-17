@@ -1,0 +1,67 @@
+{
+  "schema": "sgssc-inference-weights-manifest-v1",
+  "created_date": "2026-11-17",
+  "file": "weights/sgssc_inference.pt",
+  "bytes": 27543089,
+  "sha256": "31849ac8d35a78b3aa468b3de92444e3caf415cb1dcc4915d8be52301b687d70",
+  "tensor_counts": {
+    "encoder_state": 2647168,
+    "readout_state": 34507,
+    "spectral_head_state": 4195328
+  },
+  "metadata": {
+    "implementation": "Independent SGSSC adaptation for underwater acoustic signals",
+    "input_condition": "Measured-channel replay, no added noise, preserved training-fitted scale",
+    "input_shape": [
+      512,
+      2
+    ],
+    "sample_rate_hz": 8000,
+    "normalization_scale": 3.0439862190625893,
+    "input_scale_note": "Bundled I/Q arrays are already scaled; do not apply the scale again.",
+    "class_names": [
+      "BPSK",
+      "QPSK",
+      "8PSK",
+      "PAM4",
+      "QAM16",
+      "QAM64",
+      "GFSK",
+      "CPFSK",
+      "AM-DSB",
+      "AM-SSB",
+      "WBFM"
+    ],
+    "pretraining_windows": 242000,
+    "pretraining_updates": 20000,
+    "pretraining_selected_step": 20000,
+    "classification_training_labels": 1210,
+    "validation_labels_separately": 2200,
+    "classification_updates": 2000,
+    "classification_selected_step": 1000,
+    "seed": 20261001,
+    "label_run": 0,
+    "encoder_frozen_for_classification": true,
+    "spectral_head_type": "flatten_linear",
+    "pretraining_mask_ratio": 0.7,
+    "sources": {
+      "pretraining": {
+        "path": "outputs/m3/sgssc-expanded-masked-run0/pretrain/best.pt",
+        "sha256": "85fa038cae33df7e9fc354fd0e2d7e8501867bcc2bec537bb5405c160b073216"
+      },
+      "classification": {
+        "path": "outputs/m3/sgssc-expanded-downstream-run0/downstream-0.005/best.pt",
+        "sha256": "fec272213352f56c7beaa5c38b053eca2d837bad287b64c2d41fb0007246cec1"
+      }
+    }
+  },
+  "source_encoder_tensors_identical": true,
+  "exported_tensors_identical": true,
+  "safe_load_without_allowlist": true,
+  "optimizer_or_rng_exported": false,
+  "source_loading": "weights_only=True with explicit NumPy RNG allowlist after SHA256 verification",
+  "export_environment": {
+    "torch": "2.14.0+cpu",
+    "numpy": "2.5.3"
+  }
+}

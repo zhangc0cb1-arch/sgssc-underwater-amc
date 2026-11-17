@@ -1,0 +1,328 @@
+{
+  "schema": "sgssc-release-file-list-v1",
+  "release_date": "2026-11-17",
+  "source_archive": "source-github.zip",
+  "asset_archive": "assets.zip",
+  "noise_mode": "none_added",
+  "note": "Clean training code, clean evaluation, and classifier-only PCA50/t-SNE; test arrays and historical weights only in assets; manifest excludes itself.",
+  "files": [
+    {
+      "path": "data/classification/test_seen.npz",
+      "bytes": 8345325,
+      "sha256": "9889f112b5d66c0655916e7f9b9281bb7e8f2fe168481e388aa09c2e959ff5de",
+      "archive": "assets.zip"
+    },
+    {
+      "path": "data/classification/test_unseen.npz",
+      "bytes": 8334818,
+      "sha256": "65efe1050805d8b33b6d0e1cbc8eb30156b89464b0771297d56be21820d31887",
+      "archive": "assets.zip"
+    },
+    {
+      "path": "data/spectrum/test_seen.npz",
+      "bytes": 11611110,
+      "sha256": "317c4ad1f2b7a34dd57aab52d87e1fdd417e662981337825869d6e184b475bae",
+      "archive": "assets.zip"
+    },
+    {
+      "path": "data/spectrum/test_unseen.npz",
+      "bytes": 11608094,
+      "sha256": "c6358f8db5046f96cd8eeaed79422526e8fa46e6ee5c33c905d4f82b7220a1b7",
+      "archive": "assets.zip"
+    },
+    {
+      "path": "weights/sgssc_inference.pt",
+      "bytes": 27543089,
+      "sha256": "31849ac8d35a78b3aa468b3de92444e3caf415cb1dcc4915d8be52301b687d70",
+      "archive": "assets.zip"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 586,
+      "sha256": "34691b27118790ede72031784c4348a132777cba62d7b31dd87166aa28c64d3f",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "README.md",
+      "bytes": 18119,
+      "sha256": "7860f1fbdb2a2884be48498e7fdca32e4a7d90e123c4ce1637fd5d6248939d78",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "THIRD_PARTY_NOTICES.md",
+      "bytes": 4310,
+      "sha256": "f3139a67d2ff8fad8b3c4427fb0f0e8ddfc9c921255b5ad7698ef65d0ef7e331",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "TRAINING.md",
+      "bytes": 6537,
+      "sha256": "d9d35dd37c81ee7f712df7f92534cd0f6d721703771103ff25c7d21069e8add6",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "data/README.md",
+      "bytes": 5274,
+      "sha256": "75a052062534a359307fbb6d79d00154c845bfbd87bf836dcf03d29134c60671",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "data/classification/test_seen_metadata.csv",
+      "bytes": 378600,
+      "sha256": "4fdcb3a123095fccdf18bd31d14f30cb1dc693f00fb67932edefba13d2e00ba9",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "data/classification/test_unseen_metadata.csv",
+      "bytes": 356120,
+      "sha256": "ef69261840614d3e84d69268a1f7198e9d19b81364be85e3de002d2c20405a91",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "provenance/clean_code_validation.json",
+      "bytes": 675,
+      "sha256": "062185e03d0e941dce21fb17412d8ceb57299c30cdcfa54466eab241e2c0cb3a",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "provenance/data_manifest.json",
+      "bytes": 16434,
+      "sha256": "b3ae1857cca3361506fe04fc84dbf90da6f300dd8b3d7cd5cf7b930180de89a0",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "provenance/feature_validation.json",
+      "bytes": 1844,
+      "sha256": "4e66af8017b5e43f1f13ec7c6ce24ae24f9dd240618bd3cb6f5ba4d829f55126",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "provenance/release_validation.json",
+      "bytes": 1839,
+      "sha256": "0b7adf15a24c1a14093269db4c7f93d4c204cd2fca5f1ef1723471f51469074e",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "provenance/training_code.json",
+      "bytes": 6638,
+      "sha256": "c72ee336c6b757c9f740dc357e69f2c22ff6f1fb3fa9ab97716c676faf49175f",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "provenance/weights_manifest.json",
+      "bytes": 2224,
+      "sha256": "b5e28f24a6fc16e34b4a2294dba73b89f65c7a9cbf0d6e70eddeb3f795bb2099",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 576,
+      "sha256": "37f529914d110d06e8d0a8becdae9b946110743ecb4c87d255dfbe186ab3e5c8",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/classification/report.json",
+      "bytes": 14258,
+      "sha256": "993a9b582470048b32e46279e037eb39ceaacf303fe9b42ba827233d405e7821",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/classification/test_seen/confusion_matrix.png",
+      "bytes": 128951,
+      "sha256": "1013a53de9b9f90ab5204a873309b141d37a1e885b7c692d1e4345896f678707",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/classification/test_seen/metrics.json",
+      "bytes": 3973,
+      "sha256": "b007f4999880b7b5d5b76869b195bd589d31fe6d9222386ecc7a6771e6d4a686",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/classification/test_seen/predictions.npz",
+      "bytes": 95505,
+      "sha256": "34207a372c6f4c9b328631bf26d48d4dc1f1b15ca0ea46ecfed9c61ca0ec5443",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/classification/test_unseen/confusion_matrix.png",
+      "bytes": 130447,
+      "sha256": "4a9aee893009c6dcebf3715b0aa52eb8fdbae6f1159c49b0ba55c27b512ed177",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/classification/test_unseen/metrics.json",
+      "bytes": 3967,
+      "sha256": "8cb90c2afc1f3e525e63228cc42b76e69f666dd8b8a0391a65887956a337663f",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/classification/test_unseen/predictions.npz",
+      "bytes": 96033,
+      "sha256": "124b0eb722c08059507264eb1e2dbd827cd9bee7da72ac337d710efeb6145edc",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/features/report.json",
+      "bytes": 3347,
+      "sha256": "d33956866dc8718adf6a71a1b7888d94f57da7a7b9345ee1003bd7b5a5a7e282",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/features/test_unseen/coordinates.csv",
+      "bytes": 199826,
+      "sha256": "aee83756b8d962b4c8de661551225880152f26bd9ad53cd4fbc3f7917f5a6db6",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/features/test_unseen/feature_tsne.png",
+      "bytes": 241677,
+      "sha256": "85670afdab379dfe392d1e666cfe3afa73aecdd7fef18e7991f4cafe341a934a",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/features/test_unseen/feature_tsne.svg",
+      "bytes": 279029,
+      "sha256": "822399dbf2f2dfd37312234e5a9ce44bedcceb8acfe4084d4d0ed5e4e0bb7312",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/spectrum/report.json",
+      "bytes": 6989,
+      "sha256": "35d6e4cee05658bdcc54df165f2dea6415774eafe082127f49af17ecb2a3be16",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/spectrum/test_seen/metrics.json",
+      "bytes": 1597,
+      "sha256": "9fa9037d6b8d01b5c1fa9760b2c28a0f7f40494df40e73ef6841d54f26155156",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/spectrum/test_seen/spectrum_example.png",
+      "bytes": 191803,
+      "sha256": "7729df0df2383450736028ac1074c0b2bae3fed57340c63b62e7d35c349ace67",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/spectrum/test_unseen/metrics.json",
+      "bytes": 1600,
+      "sha256": "32f70277729efd2c1b3e10a60a72454f91571810cb277c51da6c2b061ecdc76f",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "reference_results/spectrum/test_unseen/spectrum_example.png",
+      "bytes": 179877,
+      "sha256": "cc5ee6ead7385e01068534cc1349f4714cd7077e7bdaf960ce38c12355da6da8",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "scripts/export_test_data.py",
+      "bytes": 17535,
+      "sha256": "bc6bb7e721a6bfaac494de2cb56b3b7be136697b6f21c845657bfaf608764577",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "scripts/export_weights.py",
+      "bytes": 6678,
+      "sha256": "bd6468cbead26bf1eac0ab32f7ee02dc611a9c63d4dcf76e89e1e648f6fac9f3",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "scripts/plot_reference_features.py",
+      "bytes": 1264,
+      "sha256": "19e1ce7b51822822175ad1d3312a514b5740154c7886364c8f30cceacbcf8a7c",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "scripts/train_clean.py",
+      "bytes": 2852,
+      "sha256": "192dc1aee55f1b303165296d3efcb23519e1fb9d216ce0b6db7d39ec47426c7c",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/__init__.py",
+      "bytes": 98,
+      "sha256": "4f29670b5552b5f9209585426a1b2b437bcac17e43d49babc2c0b6902fafc965",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/__main__.py",
+      "bytes": 80,
+      "sha256": "6a170fc866c867a1e5812daad308396f0940a23f2ecf55e56be39d5d67d23f10",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/cli.py",
+      "bytes": 7173,
+      "sha256": "1b7123f4294c685ab6bbddf73dc17b37666e955fa9d6b0210c05bab4ca971128",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/data.py",
+      "bytes": 2612,
+      "sha256": "1818b3e6b76b5f5f5250c0f11dd9e8aa28b9d78ab01f920fe3ed6e4b886f5e1e",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/feature_plots.py",
+      "bytes": 3851,
+      "sha256": "f43bf9454467e6fc6d2eeb8358361dd3d25b36c160297c43b41f049c3bbf6de5",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/features.py",
+      "bytes": 9786,
+      "sha256": "c3f908a8b316ac1a5075daa21c0fadf6e2ceafdc445154fac27232327b63af77",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/inference.py",
+      "bytes": 4090,
+      "sha256": "6c59772ce3d17bd6270d4c8bf8502659762c9fbd3031db02478e8daffeb90af2",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/metrics.py",
+      "bytes": 4557,
+      "sha256": "ab03f380da3a2a9c2409288d68ae5922043157a9eb52cf44356a4155782c06dd",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/models.py",
+      "bytes": 11276,
+      "sha256": "0315cedd1a501096a723bbcb85d1e61273cce0f3af63a365f912a64ba094d989",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/plots.py",
+      "bytes": 2632,
+      "sha256": "54c7dbadc8ba504b8d7e6e3bf7177361d0255e5e1e955409e3427d672f0aa208",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "src/sgssc_amc/training.py",
+      "bytes": 23451,
+      "sha256": "8739145f918dd58202e43bc59d27eefe30e0c8360720d8e9a8f0c83db1289680",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "tests/test_features.py",
+      "bytes": 15192,
+      "sha256": "497a6da7c75d1d7965c97dd94a7b743741ad9402e24358228fb5c3de93675d77",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "tests/test_inference.py",
+      "bytes": 5801,
+      "sha256": "288fd50027c0c1fe15650fa7bf990c3b82f55ac1f463bf098c3ff30cf6f9ac5e",
+      "archive": "source-github.zip"
+    },
+    {
+      "path": "tests/test_training.py",
+      "bytes": 9049,
+      "sha256": "fc91a6ef09e4119dd4651b7d3494831e3b6505d2c4c09e418b96921f7101427f",
+      "archive": "source-github.zip"
+    }
+  ]
+}

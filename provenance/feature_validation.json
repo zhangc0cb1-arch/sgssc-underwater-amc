@@ -1,0 +1,57 @@
+{
+  "schema": "sgssc-clean-feature-verification-v2",
+  "verification_date": "2026-11-17",
+  "noise_mode": "none_added",
+  "feature_space": "classifier_features",
+  "split": "test_unseen",
+  "windows": 2200,
+  "class_counts": [
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200,
+    200
+  ],
+  "method": "L2 -> PCA50 -> t-SNE",
+  "runtime": {
+    "python": "3.12.14",
+    "numpy": "2.5.3",
+    "torch": "2.14.0+cpu",
+    "scikit_learn": "1.7.2"
+  },
+  "published_coordinates": {
+    "historical_coordinate_bitwise_equal": true,
+    "max_coordinate_error": 0.0,
+    "pca_retained_variance": 0.9982930598578293
+  },
+  "reference_coordinates_roundtrip_identical": true,
+  "fresh_extraction_all_predictions_equal_to_release": true,
+  "fresh_extraction_max_logit_difference": 0.0,
+  "fresh_extraction_max_feature_difference_from_original_cache": 0.0,
+  "fresh_extraction_ids_and_labels_match_original_cache": true,
+  "checkpoint_sha256": "31849ac8d35a78b3aa468b3de92444e3caf415cb1dcc4915d8be52301b687d70",
+  "test_data_sha256": "65efe1050805d8b33b6d0e1cbc8eb30156b89464b0771297d56be21820d31887",
+  "assets_zip_sha256": "0adbcc7734e31c804464474c240f331e453a4cbfbc86f351c707ff36c5d60507",
+  "gray_text_removed": true,
+  "highlight_class_ids": [
+    8,
+    9
+  ],
+  "other_class_points": 1800,
+  "formal_training_updates": 0,
+  "note": "Reference plot redraws original clean coordinates; portable refit matches them bitwise when using the original features. Fresh extraction may differ numerically.",
+  "fresh_extraction_coordinates_equal_to_historical": true,
+  "test_suite_passed": 30,
+  "test_files": [
+    "tests/test_inference.py",
+    "tests/test_features.py",
+    "tests/test_training.py"
+  ],
+  "legacy_clean_weight_training_loader_checked": true
+}

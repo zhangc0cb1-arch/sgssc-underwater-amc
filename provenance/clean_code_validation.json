@@ -1,0 +1,18 @@
+{
+  "schema": "sgssc-clean-code-verification-v1",
+  "date": "2026-11-17",
+  "passed": 30,
+  "test_files": [
+    "tests/test_inference.py",
+    "tests/test_features.py",
+    "tests/test_training.py"
+  ],
+  "test_scope": "Frozen inference; PCA50/t-SNE protocol and clean styling; training gradients/freeze/validation/checkpoint policies",
+  "formal_training_run": false,
+  "legacy_released_checkpoint_accepted_by_clean_training_loader": true,
+  "full_test_visualization_windows": 2200,
+  "full_test_predictions_equal_to_release": true,
+  "full_test_classifier_features_and_coordinates_equal_to_historical": true,
+  "torch": "2.14.0+cpu",
+  "numpy": "2.5.3"
+}

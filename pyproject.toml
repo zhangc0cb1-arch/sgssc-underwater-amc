@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sgssc-amc"
+version = "0.1.0"
+description = "No-added-noise SGSSC training, classification, spectrum reconstruction and PCA50/t-SNE visualization"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.24",
+    "torch>=2.6",
+    "matplotlib>=3.7",
+]
+
+[project.optional-dependencies]
+export = ["h5py>=3.8", "numpy>=2.0"]
+test = ["pytest>=7"]
+visualize = ["scikit-learn==1.7.2", "threadpoolctl>=3.6"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

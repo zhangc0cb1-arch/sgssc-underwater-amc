@@ -1,0 +1,96 @@
+{
+  "schema": "sgssc-clean-reference-features-v1",
+  "noise_mode": "none_added",
+  "split": "test_unseen",
+  "feature": "sgssc_global: 128-D attention pooled vector before final linear classifier",
+  "class_names": [
+    "BPSK",
+    "QPSK",
+    "8PSK",
+    "PAM4",
+    "QAM16",
+    "QAM64",
+    "GFSK",
+    "CPFSK",
+    "AM-DSB",
+    "AM-SSB",
+    "WBFM"
+  ],
+  "windows": 2200,
+  "samples_per_class": 200,
+  "training_updates": 0,
+  "new_tsne_fits": 0,
+  "source": "Historical clean SGSSC panel from the LLDNet manuscript Figure 8",
+  "source_feature_sha256": "878396c5fdf03fab766e738620b7ff254c0f4c56c4a524182059090604008c3b",
+  "source_embedding_sha256": "f31746a9401ac755ee967b72b1948d9366886e691cdff776a3aec08057c8bb56",
+  "checkpoint_sha256": "31849ac8d35a78b3aa468b3de92444e3caf415cb1dcc4915d8be52301b687d70",
+  "protocol": {
+    "sample_selection": "all 2200 held-out unseen windows; 200 per class; no selection by correctness",
+    "feature_dimensions": 128,
+    "normalization": "row L2 normalization, epsilon 1e-12; original features retained",
+    "pca_components": 50,
+    "pca_solver": "full",
+    "pca_whiten": false,
+    "tsne_components": 2,
+    "perplexity": 30.0,
+    "early_exaggeration": 12.0,
+    "learning_rate": "auto",
+    "max_iter": 1500,
+    "init": "pca",
+    "metric": "euclidean",
+    "method": "barnes_hut",
+    "angle": 0.5,
+    "random_state": 20261031,
+    "threads": 4,
+    "embedding_scope": "fit each feature representation separately; coordinates are not aligned across panels",
+    "selection": "one prespecified setting and seed, no search for visually separated clusters",
+    "auxiliary_metric": "cosine silhouette on L2-normalized 128-D features with all 11 true classes; descriptive only"
+  },
+  "original_projection_software": {
+    "numpy": "2.5.3",
+    "scipy": "1.18.1",
+    "scikit-learn": "1.7.2",
+    "joblib": "1.5.2",
+    "threadpoolctl": "3.6.0"
+  },
+  "projection_metrics": {
+    "pca_explained_variance_ratio_sum": 0.9982930598578293,
+    "tsne_kl_divergence": 1.2454458475112915,
+    "tsne_iterations": 1499,
+    "cosine_silhouette_all_11_classes": -0.041168735142343545,
+    "cosine_silhouette_per_class": {
+      "BPSK": -0.007938506829837216,
+      "QPSK": -0.022694434413867554,
+      "8PSK": -0.05743785314571775,
+      "PAM4": -0.05570318917630411,
+      "QAM16": -0.077027071287384,
+      "QAM64": -0.06863940966168365,
+      "GFSK": -0.1629769906820119,
+      "CPFSK": -0.15206775877094014,
+      "AM-DSB": -0.35227436389143635,
+      "AM-SSB": 0.7455626140775766,
+      "WBFM": -0.24165912278417287
+    },
+    "elapsed_seconds": 6.566775399958715
+  },
+  "coordinates_file": "test_unseen/coordinates.csv",
+  "coordinates_file_sha256": "aee83756b8d962b4c8de661551225880152f26bd9ad53cd4fbc3f7917f5a6db6",
+  "coordinates_equal_to_historical_sgssc": true,
+  "gray_text": false,
+  "highlighted": {
+    "AM-DSB": {
+      "label": 8,
+      "points": 200
+    },
+    "AM-SSB": {
+      "label": 9,
+      "points": 200
+    }
+  },
+  "gray_background_points": 1800,
+  "plots": {
+    "png": "test_unseen/feature_tsne.png",
+    "svg": "test_unseen/feature_tsne.svg"
+  },
+  "note": "Only styling changed; every original point and its coordinate are retained. Projection is not a classifier metric."
+}
