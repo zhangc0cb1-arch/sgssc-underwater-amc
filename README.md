@@ -42,7 +42,7 @@ python -m sgssc_amc classify --split all --data-dir data --checkpoint weights/sg
 python -m sgssc_amc spectrum --split all --data-dir data --checkpoint weights/sgssc_inference.pt --output results/spectrum
 ```
 
-Use `--batch-size` and `--threads` to control CPU execution, or `--no-plots` to write numeric results only. Each output root contains `report.json`, including evaluation options and checkpoint/data hashes. Each split has `metrics.json` and `predictions.npz`; plots are `confusion_matrix.png` for classification and `spectrum_example.png` for reconstruction. The spectrum example is the first sample in the split, not a sample selected for visual quality.
+Use `--batch-size` and `--threads` to control execution, or `--no-plots` to write numeric results only. Each output root contains `report.json`, including evaluation options and checkpoint/data hashes. Each split has `metrics.json` and `predictions.npz`; plots are `confusion_matrix.png` for classification and `spectrum_example.png` for reconstruction. The spectrum example is the first sample in the split, not a sample selected for visual quality.
 
 The checkpoint contains the encoder, classification readout, and spectrum head as tensors with basic metadata. The loader uses `torch.load(..., map_location="cpu", weights_only=True)`; optimizer and random-generator states are excluded.
 
@@ -84,7 +84,7 @@ This package uses the project's **flatten-to-linear spectrum head**: the final `
 | Classification selection | Highest accuracy on 2,200 separate validation labels; earliest tie; selected update 1,000 |
 | Random seed | `20261001`, label selection run 0 |
 
-These are **batch updates, not epochs**. Validation labels are additional to the 1,210 training labels. This release preserves one trained seed, not a multi-seed mean. The 512-sample input, joint I/Q patching, linear spectrum head, and optimization budgets are documented project adaptations; they should not be attributed to an official SGSSC code release.
+These are **batch updates, not epochs**. Validation labels are additional to the 1,210 training labels. The 512-sample input, joint I/Q patching, linear spectrum head, and optimization budgets are documented project adaptations.
 
 ## Classification reference results
 
@@ -95,7 +95,7 @@ Historical full-test results for the supplied classification model:
 | Seen record | 788 / 2,200 | 35.82% | 32.95% |
 | Unseen record | 765 / 2,200 | 34.77% | 30.39% |
 
-These results describe the specified single-seed, no-additional-noise protocol. They do not establish state-of-the-art performance, broad ocean-domain generalization, or performance on gait data. Model weights were selected using validation data; these test results were not used to select a checkpoint.
+These results describe the specified single-seed, no-additional-noise protocol. Model weights were selected using validation data; these test results were not used to select a checkpoint.
 
 The standalone release reproduces every historical classification prediction on both splits. Floating-point logits differ by at most `6.68e-6` from the saved historical calculation; predicted classes and aggregate metrics are unchanged.
 
@@ -103,7 +103,7 @@ The standalone release reproduces every historical classification prediction on 
 
 ## Spectrum reference results
 
-Spectrum evaluation for this release uses newly fixed masks on the retained test windows. These are new held-out reconstruction results, separate from historical pretraining validation MSE and classification accuracy. No model weights or hyperparameters were changed in response to these results.
+Spectrum evaluation for this release uses newly fixed masks on the retained test windows. These are new held-out reconstruction results, separate from historical pretraining validation MSE and classification accuracy.
 
 | Split | Model MSE | Model NMSE | Non-DC NMSE | Masked-input FFT NMSE |
 |---|---:|---:|---:|---:|
@@ -143,17 +143,15 @@ Complete I/Q -> frozen encoder -> trained attention pooling -> 128-D features
                                                             |-> L2 -> PCA50 -> t-SNE -> plot
 ```
 
-This follows the SGSSC panel of the project's LLDNet manuscript Figure 8: row L2 normalization, 50-component PCA with full SVD and no whitening, then t-SNE. The t-SNE settings are two dimensions, perplexity 30, early exaggeration 12, automatic learning rate, 1,500 iterations, Euclidean distance, Barnes-Hut with angle 0.5, PCA initialization, and random seed `20261031`. Use four CPU threads. The visualization extra pins scikit-learn `1.7.2`, matching the archived projection.
+This follows the SGSSC panel of the project's LLDNet manuscript Figure 8: row L2 normalization, 50-component PCA with full SVD and no whitening, then t-SNE. The t-SNE settings are two dimensions, perplexity 30, early exaggeration 12, automatic learning rate, 1,500 iterations, Euclidean distance, Barnes-Hut with angle 0.5, PCA initialization, and random seed `20261031`. The visualization extra pins scikit-learn `1.7.2`, matching the archived projection.
 
-PCA50 preprocessing and PCA initialization are separate operations. Neither is used by the classifier during training or prediction. Labels do not enter PCA or t-SNE. This is a descriptive projection fitted to the test features; visual separation is not a classification accuracy measure.
-
-The default is the complete `test_unseen` split. `--split test_seen` is also available and uses only that no-added-noise split in a separate fit. No joint Seen/Unseen map, noisy condition, encoder-feature plot, or MDS branch is included.
+The default is the complete `test_unseen` split. `--split test_seen` is also available and uses only that no-added-noise split in a separate fit.
 
 A new extraction writes `report.json` plus a split subdirectory containing `features.npz`, `pca.npz`, `coordinates.csv`, `feature_tsne.png`, and `feature_tsne.svg`. The repository stores only the historical reference coordinates, figures, and provenance; generated full feature arrays remain local. The reference coordinates are identical to the archived clean SGSSC panel. A fresh extraction/refit can differ numerically with library versions and floating-point computation; use the redraw command when reproducing the exact published picture.
 
 ## Train on separately supplied clean data
 
-Training entry points preserve the two stages described above and offer no synthetic-noise mode. They use the trainable model modules directly; the frozen inference wrapper remains evaluation-only.
+Training entry points preserve the two stages described above. They use the trainable model modules directly, while the frozen inference wrapper remains evaluation-only.
 
 ```bash
 # Masked-spectrum pretraining; defaults: 20,000 updates, batch 64, Adam 1e-4.
@@ -164,25 +162,22 @@ python scripts/train_clean.py pretrain --train-data training_data/pretrain_train
 python scripts/train_clean.py classifier --train-data training_data/labeled_train --val-data training_data/val --pretrained training_runs/pretrain/best.pt --output training_runs/classifier
 ```
 
-To train a new classifier from the supplied pretrained encoder, pass `--pretrained weights/sgssc_inference.pt` instead. The classifier's readout is initialized anew. Training selects checkpoints on validation data only; published test arrays must not be used as training or validation inputs.
+To train a new classifier from the supplied pretrained encoder, pass `--pretrained weights/sgssc_inference.pt` instead. The classifier's readout is initialized anew. Training selects checkpoints on validation data only.
 
-Data format, split checks, and optional parameters are described in [TRAINING.md](TRAINING.md) and `python scripts/train_clean.py --help`. A local run requires separately supplied training and validation arrays. The release contains neither; the published weights remain the original historical weights. The newly packaged training routines were checked with small synthetic examples, not a new full-budget training run. They implement the same architecture and objectives, but do not promise bitwise reproduction of historical optimizer/RNG trajectories.
+Data format, split checks, and optional parameters are described in [TRAINING.md](TRAINING.md) and `python scripts/train_clean.py --help`. The published weights remain the original historical weights. The newly packaged training routines were checked with small synthetic examples.
 
 ## Source and verification
 
-The evaluation entry point is `python -m sgssc_amc`. Optional `scripts/export_test_data.py` and `scripts/export_weights.py` read the original research archive to regenerate the **clean** release assets; they are not needed for normal use.
+The evaluation entry point is `python -m sgssc_amc`. Optional `scripts/export_test_data.py` and `scripts/export_weights.py` read the original research archive to regenerate the **clean** release assets.
 
 ```bash
 python -m pip install -e ".[test,visualize]"
 python -m pytest
 ```
 
-[Evaluation verification](provenance/release_validation.json), [feature verification](provenance/feature_validation.json), and [training-code provenance](provenance/training_code.json) record the checks. The repository includes no training/validation waveforms or noisy-condition checkpoints. "Pink" in data attribution names the measured channel collection and does not indicate that pink noise was added.
-
+[Evaluation verification](provenance/release_validation.json), [feature verification](provenance/feature_validation.json), and [training-code provenance](provenance/training_code.json) record the checks. The repository includes no training/validation waveforms.
 ## Sources and license status
 
 - Method: [Predicting Spectral Information for Self-Supervised Signal Classification, IJCAI 2025](https://www.ijcai.org/proceedings/2025/0752.pdf).
 - Measured channels: [Underwater Acoustic Channel Repository, v1.0](https://doi.org/10.5281/zenodo.21287414), Pink subset, **CC BY 4.0**. Full author attribution and the derivation statement are in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 - Replay software used upstream: [UWA Channels Python](https://github.com/uwa-channels/python), v0.7.1, MIT.
-
-The project author has not yet selected a license for the original code and model weights. The upstream data attribution and licenses remain separate. This package is not affiliated with the SGSSC authors or the channel-data creators.
