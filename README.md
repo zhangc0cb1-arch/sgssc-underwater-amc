@@ -3,13 +3,13 @@
 An independent implementation and underwater acoustic adaptation of **SGSSC**, using **no additional synthetic receiver noise** throughout pretraining, classifier training, evaluation, and feature visualization.
 
 1. **Self-supervised pretraining:** recover the full complex spectrum from a masked I/Q window.
-2. **Classifier training:** freeze the pretrained Transformer and train its multilayer attention readout with a small labeled subset.
+2. **Classifier training:** freeze the pretrained Transformer encoders and train its multilayer attention readout with a small labeled subset.
 3. **Evaluation:** run modulation classification and masked spectrum reconstruction on the fixed Seen/Unseen test sets.
-4. **Feature visualization:** L2-normalize the classifier's 128-dimensional attention features, reduce them to 50 dimensions with PCA, and apply two-dimensional t-SNE. Only AM-DSB and AM-SSB are highlighted.
+4. **Feature visualization:** L2-normalize the classifier's 128-dimensional attention features, reduce them to 50 dimensions with PCA, and apply two-dimensional t-SNE.
 
 The spectrum prediction is not fed into the classifier. FFT constructs reconstruction targets and comparison baselines; the model predicts the spectrum from masked input.
 
-**Only test data and trained weights are distributed.** Training code is included, but training and validation arrays are not. Training is optional and requires separately prepared, disjoint training/validation inputs. All evaluation commands use the supplied fixed weights.
+**Only test data and trained weights are distributed.** Training code is included, but training and validation arrays are not. All evaluation commands use the supplied fixed weights.
 
 Clone or download this repository. On its GitHub page, open **Releases → v0.1.0**, download **`assets.zip`**, and extract it into the repository root, alongside `pyproject.toml`. Merge the archive's `data/` and `weights/` directories with the existing folders. The source repository does not contain the binary test arrays or checkpoint. After extracting the assets, evaluation runs locally without authentication or further data downloads.
 
@@ -27,30 +27,6 @@ sgssc-underwater-amc/
 └── THIRD_PARTY_NOTICES.md
 ```
 
-## Install
-
-Use Python 3.10 or later in a virtual environment. From this directory:
-
-```powershell
-# Windows PowerShell
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install --upgrade pip
-.\.venv\Scripts\python.exe -m pip install torch --index-url https://download.pytorch.org/whl/cpu
-.\.venv\Scripts\python.exe -m pip install -e .
-```
-
-```bash
-# Linux / macOS
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install --upgrade pip
-# Linux CPU wheel:
-python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
-# On macOS, use: python -m pip install torch
-python -m pip install -e .
-```
-
-Use the environment's Python for the commands below. In PowerShell, replace `python` with `.\.venv\Scripts\python.exe` if the environment is not activated. NumPy, PyTorch, and Matplotlib are the runtime dependencies. Optional export tooling needs h5py and NumPy 2.0 or later (`python -m pip install -e ".[export]"`); it is unnecessary when using the supplied assets. The weights loader itself does not require NumPy 2.
 
 ## Run classification and spectrum evaluation
 
@@ -59,7 +35,7 @@ python -m sgssc_amc classify --split all --output results/classification
 python -m sgssc_amc spectrum --split all --output results/spectrum
 ```
 
-Both commands use CPU, four threads, and batches of 64 by default. They evaluate both 2,200-window splits and write metrics and plots to the selected output directory. Use `--help` for the supported options. Data and checkpoint locations can be supplied explicitly:
+Both commands use batches of 64 by default. They evaluate both 2,200-window splits and write metrics and plots to the selected output directory. Data and checkpoint locations can be supplied explicitly:
 
 ```bash
 python -m sgssc_amc classify --split all --data-dir data --checkpoint weights/sgssc_inference.pt --output results/classification
@@ -83,10 +59,6 @@ The checkpoint contains the encoder, classification readout, and spectrum head a
 | Noise condition | No additional synthetic noise; measured-channel effects remain |
 | Scale | Source-project training-derived common scale `3.0439862190625893`; already applied, with no test-set refitting |
 
-The source signals are synthetic modulations replayed through measured **Pink** channel impulse responses. “No additional noise” does not mean an absolutely noiseless sea recording. `test_seen` uses held-out time blocks from the training records (`pink_2`, `pink_3`); `test_unseen` holds out `pink_1`. The source training/validation/Seen intervals are `[0,24)`, `[28,40)`, and `[44,56)` seconds respectively. Record IDs are the project's grouping assumption, not proof of independent ocean environments.
-
-The classification, spectrum, and visualization evaluations share observations, so they are not independent test datasets. Fixed masks make reconstruction evaluation repeatable. Classification and feature extraction use the complete input; the reconstruction model receives only its masked counterpart. Targets and labels are not added to model inputs. The visualization keeps all windows in the selected split and uses labels only to assign colors and markers.
-
 `provenance/` records export identity and source information. Keep it alongside `data/` and `weights/` when moving the package. The original multi-gigabyte channel archive and unrelated research experiments are not included.
 
 NPZ arrays can be read with `numpy.load(path, allow_pickle=False)`:
@@ -102,7 +74,7 @@ The accompanying classification metadata CSVs preserve source locations. `proven
 
 The encoder has eight Transformer layers, width 128, eight attention heads, and FFN width 1,024. Each token covers 16 consecutive complex samples, producing 32 tokens. The classifier concatenates outputs from all eight layers along the token axis, applies sigmoid attention weights, sums the weighted features, and predicts 11 classes.
 
-This package uses the project's **flatten-to-linear spectrum head**: the final `[32,128]` feature map is flattened to 4,096 values and linearly mapped to 1,024 values (512 complex frequency bins). It does not use the earlier query-based decoder from the source project's exploratory implementation.
+This package uses the project's **flatten-to-linear spectrum head**: the final `[32,128]` feature map is flattened to 4,096 values and linearly mapped to 1,024 values (512 complex frequency bins).
 
 | Stage | Historical run used for this release |
 |---|---|
